@@ -3,6 +3,7 @@ import java.util.*;
 public class madlibs {
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
+
         String name;
         System.out.println("male name");
         name = s.nextLine();
@@ -57,8 +58,61 @@ public class madlibs {
         String object;
         System.out.println("object");
         object = s.nextLine();
+
+        System.out.println("action");
+        String action2 = s.nextLine();
+
+        System.out.println("noun");
+        String noun = s.nextLine();
+
+        System.out.println("noun");
+        String noun2 = s.nextLine();
+
+        System.out.println("noun");
+        String thing = s.nextLine();
+
+        System.out.println("verb");
+        String verb = s.nextLine();
+
+        System.out.println("adjective");
+        String adjective = s.nextLine();
+
+        System.out.println("adjective");
+        String anotheradjective = s.nextLine();
+
+        System.out.println("noun");
+        String anotherobject = s.nextLine();
+
+        System.out.println("adjective");
+        String thirdadjective = s.nextLine();
+
+        System.out.println("verb");
+        String anotherverb = s.nextLine();
+
+        System.out.println("movie");
+        String movie = s.nextLine();
+
+        System.out.println("number as string (e.g. six)"); 
+        String intAsString = s.nextLine();
+
+        System.out.println("verb");
+        String thirdverb = s.nextLine();
+
+        System.out.println("noun");
+        String noun3 = s.nextLine();
+
+        System.out.println("object");
+        String object2 = s.nextLine();
+
+        System.out.println("object");
+        String object3 = s.nextLine();
+
+        System.out.println("object");
+        String object4 = s.nextLine();
+
+        printMadLibs(name, food1, food2, food3, food4, dayofweek, action, number, item, age, gpa, name2, object, action2, noun, noun2, thing, verb, adjective, anotheradjective, anotherobject, thirdadjective, anotherverb, movie, intAsString, thirdverb, noun3, object2, object3, object4);
     }
-    public void printMadLibs(String name, String food1, String food2, String food3, String food4, String dayofweek, String action,
+    public static void printMadLibs(String name, String food1, String food2, String food3, String food4, String dayofweek, String action,
     int number, String item, int age, double gpa, String name2, String object, String action2, String noun, String noun2, String thing, String verb,
     String adjective, String anotheradjective, String anotherobject, String thirdadjective, String anotherverb, String movie, String intAsString,
     String thirdverb, String noun3, String object2, String object3, String object4) {
@@ -78,7 +132,7 @@ public class madlibs {
         System.out.println("I spent all these years trying to be the "+adjective+" guy, the man in the "+ anotheradjective+" "+anotherobject+". I'm not becoming like them... I am them.");
         System.out.println("What are you doing, "+thirdadjective+"?");
         System.out.println("I’m doing the best "+anotherverb+" from " +movie+". Actually--"+intAsString+" of me are doing the best speech from "+movie);
-        System.out.println("Store was "+thirdverb+" about two hours ago. "+noun3+" disabled the"+object2);
+        System.out.println("Store was "+thirdverb+" about two hours ago. "+noun3+" disabled the "+object2);
         System.out.println("They mostly took "+object3+" and "+object4);
 
     }
