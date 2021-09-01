@@ -121,7 +121,7 @@ public class madlibs {
         System.out.println("However, "+name+" did not like to eat "+food3+" and he absolutely hated "+food4);
         System.out.println("On "+dayofweek+", "+name+" went to go "+action);
         System.out.println("While he was there, he also bought "+number+" "+item+"s");
-        System.out.println(name+" is "+age+" years old");
+        System.out.println(name+" is "+(age+1)+" minus 1 years old");
         System.out.println("His GPA in high school was "+gpa);
         System.out.println("Now we will remake humpty dumpty.");
         System.out.println(name2+" sat on a "+object);
