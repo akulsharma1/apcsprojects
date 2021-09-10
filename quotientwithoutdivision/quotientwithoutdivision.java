@@ -1,61 +1,41 @@
 package quotientwithoutdivision;
 
+import java.util.*;
 public class quotientwithoutdivision {
-    public static String ReturnQuotient(int num1, int num2) {
-        System.out.println("got here");
-        int quotient = 0;
-        int remainder = 0;
+
+    public static String ReturnNum2 (int num1, int num2) {
+        String returnVal = "";
+        int wholeNum = 0;
+
+        while(num1 - num2 >= 0) {
+            num1 -= num2;
+            wholeNum++;
+        }
+        returnVal+=wholeNum+".";
+
         int number1 = num1;
-        while(number1 >= 0) {
-            if (number1 - num2 < 0) {
-                remainder = number1*10;
-                number1=-1;
-            } else {
+        for (int i = 0; i<10; i++) {
+            int decimalpoint = 0;
+            number1 *= 10;
+
+            while(number1 - num2 >= 0) {
                 number1 -= num2;
-                quotient++;
+                decimalpoint++;
             }
+            returnVal += decimalpoint;
         }
-
-        //number1second
-        double decquotient = 0;
-        String returnval = quotient + ".";
-        double remaindersecond = 0;
-        //System.out.println(returnval);
-        for(int i = 0; i<10; i++) {
-            //System.out.println("in here");
-            if (i == 0) {
-                System.out.println("in i");
-                System.out.println(remainder);
-                while(remainder >= 0) {
-                    System.out.println("in var");
-                    if (remainder - num2 < 0) {
-                        remaindersecond = remainder;
-                        returnval += (decquotient*0.1);
-                        remainder = -1;
-                    } else {
-                        remainder -= num2;
-                        decquotient++;
-                    }
-                }
-
-            }
-        }
-        // double decquotient = 0;
-        // for(int i = 1; i<10; i++) {
-        //     while (remainder >= 0) {
-        //         if(remainder - num2 < 0) {
-        //             //return quotient+(decquotient*0.1);
-        //         } else {
-        //             remainder -= num2;
-        //             decquotient++;
-        //         }
-        //     }
-        // }
-        System.out.println(returnval);
-        return "";
+        return returnVal;
     }
     public static void main(String[] args) {
-        String num = ReturnQuotient(10, 3);
-        System.out.println(num);
+        Scanner s = new Scanner(System.in);
+
+        System.out.println("Enter number 1");
+        int num1 = s.nextInt();
+        s.nextLine();
+
+        System.out.println("Enter number 2");
+        int num2 = s.nextInt();
+        s.nextLine();
+        System.out.println(ReturnNum2(num1, num2));
     }
 }
