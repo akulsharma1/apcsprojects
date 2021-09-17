@@ -1,8 +1,14 @@
 package evil6;
 
+import java.util.*;
 public class evil6 {
     public static void main(String[] args) {
-        ReturnWithoutSix(1006162);
+        Scanner s = new Scanner(System.in);
+        System.out.println("enter number");
+        int num = s.nextInt();
+        s.nextLine();
+        System.out.println(num);
+        //ReturnWithoutSix(num);
     }
     public static void ReturnWithoutSix(int num) {
         String s = "";
