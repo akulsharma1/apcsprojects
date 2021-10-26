@@ -1,5 +1,6 @@
 package connect4;
 
+import java.util.*;
 public class connect4 {
     public static String[][] board = new String[6][7];
 
@@ -67,21 +68,48 @@ public class connect4 {
         }
         return false;
     }
+
+    public static void playGame() {
+
+        Scanner s = new Scanner(System.in);
+        System.out.println("Welcome!");
+        printBoard();
+
+        int counter = 0;
+        while (counter <= 42) {
+            System.out.println("Player yellow, choose column (0 - 6)");
+            int yinput = s.nextInt();
+            s.nextLine();
+            yellowAddPiece(yinput);
+            printBoard();
+            boolean yWin = checkWinner("Y");
+            if (yWin) {
+                System.out.println("Yellow wins");
+                break;
+            }
+            counter++;
+
+            System.out.println("Player blue, choose column (0-6)");
+            int binput = s.nextInt();
+            s.nextLine();
+            blueAddPiece(binput);
+            printBoard();
+            boolean bWin = checkWinner("B");
+            if (bWin) {
+                System.out.println("Blue wins");
+                break;
+            }
+            counter++;
+        }
+        if (counter >= 42) {
+            System.out.println("Tie, ended game");
+        }
+
+        
+    }
     public static void main(String[] args) {
         setBoard();
-        //printBoard();
-        blueAddPiece(0);
-        yellowAddPiece(1);
-        blueAddPiece(2);
-        blueAddPiece(3);
-        blueAddPiece(1);
-        blueAddPiece(2);
-        blueAddPiece(3);
-        blueAddPiece(2);
-        blueAddPiece(3);
-        blueAddPiece(3);
-        printBoard();
-        System.out.println(checkWinner("B"));
+        playGame();
     }
 }
 
