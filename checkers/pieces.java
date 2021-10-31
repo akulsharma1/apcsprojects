@@ -13,13 +13,19 @@ public class pieces {
         player = "1";
     }
   
+    public pieces( int x, int y, boolean b) {
+        xCor = x;
+        yCor = y;
+        king = b;
+        player = "1";
+    }
+  
     public pieces( int x, int y, boolean b, String p) {
         xCor = x;
         yCor = y;
         king = b;
         player = p;
     }
-  
     public int getX() {
         return xCor;
     }
