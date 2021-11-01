@@ -55,14 +55,51 @@ public class checkers {
             board[p2pieces[i].getX()][p2pieces[i].getY()] = p2pieces[i];
         }
     }
-    public static boolean checkLegalMove(pieces piece,int endPosx, int endPosy) {
+    public static boolean checkLegalMove(pieces piece, int endPosx, int endPosy) {
+        if (piece.getPlayer().contains("1")) {
+            if (endPosx > 7 || endPosy > 7 || endPosx < 0 || endPosy < 0)
+                return false;
+            if (!piece.kingStatus()) {
+                if (piece.getY()-endPosy <= 0)
+                    return false;
+                if (piece.getX()==endPosx)
+                    return false;
+                if ((piece.getX()+1 == endPosx && piece.getY()-1 == endPosy) || (piece.getX()-1 == endPosx && piece.getY()-1 == endPosy)) {
+                    for (int i = 0; i < p1pieces.length; i++) {
+                        if (p1pieces[i].getX() == endPosx && p1pieces[i].getY() == endPosy)
+                            return false;
+                        if (p2pieces[i].getX() == endPosx && p2pieces[i].getY() == endPosy)
+                            return false;
+                    }
+                }
+
+                if (piece.getX()+2 == endPosx && piece.getY()-2 == endPosy) {
+                    for (int i = 0; i < p2pieces.length; i++) {
+                        if (p2pieces[i].getX() == endPosx - 1 && p2pieces[i].getY() == endPosy+1) {
+                            p2pieces[i] = null;
+                        }
+                    }
+                }
+                if (piece.getX()-2 == endPosx && piece.getY()-2 == endPosy) {
+                    for (int i = 0; i < p2pieces.length; i++) {
+                        if (p2pieces[i].getX() == endPosx + 1 && p2pieces[i].getY() == endPosy+1) {
+                            p2pieces[i] = null;
+                        }
+                    }
+                }
+
+                return true;
+
+            }
+        }
         
         return false;
     }
     public static void movep1() {
         System.out.println("---------------------");
         for (int i = 0; i < p1pieces.length; i++) {
-            System.out.println("Piece "+i+":   x:"+p1pieces[i].getX()+"    y:"+p1pieces[i].getY());
+            if (p1pieces[i].getX() >= 0)
+                System.out.println("Piece "+i+":   x:"+p1pieces[i].getX()+"    y:"+p1pieces[i].getY());
         }
         System.out.println("---------------------");
 
