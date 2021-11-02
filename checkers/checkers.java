@@ -75,6 +75,9 @@ public class checkers {
 
                 if (piece.getX()+2 == endPosx && piece.getY()-2 == endPosy) {
                     for (int i = 0; i < p2pieces.length; i++) {
+                        if (p1pieces[i].getX() == endPosx - 1 && p1pieces[i].getY() == endPosy+1) {
+                            return false;
+                        }
                         if (p2pieces[i].getX() == endPosx - 1 && p2pieces[i].getY() == endPosy+1) {
                             p2pieces[i] = null;
                         }
@@ -82,6 +85,9 @@ public class checkers {
                 }
                 if (piece.getX()-2 == endPosx && piece.getY()-2 == endPosy) {
                     for (int i = 0; i < p2pieces.length; i++) {
+                        if (p1pieces[i].getX() == endPosx + 1 && p1pieces[i].getY() == endPosy+1) {
+                            return false;
+                        }
                         if (p2pieces[i].getX() == endPosx + 1 && p2pieces[i].getY() == endPosy+1) {
                             p2pieces[i] = null;
                         }
@@ -90,6 +96,29 @@ public class checkers {
 
                 return true;
 
+            } else {
+                if (piece.getY()-endPosy == 0)
+                    return false;
+                if (piece.getX()==endPosx)
+                    return false;
+                if (piece.getX()+1 == endPosx) {
+                    if (piece.getY()-1 == endPosy) {
+                        for (int i = 0; i < p1pieces.length; i++) {
+                            if (p1pieces[i].getX() == endPosx && p1pieces[i].getY() == endPosy && p1pieces[i] != piece)
+                                return false;
+                            if (p2pieces[i].getX() == endPosx && p2pieces[i].getY() == endPosy)
+                                return false;
+                        }
+                    } else if (piece.getY()+1 == endPosy) {
+                        for (int i = 0; i < p1pieces.length; i++) {
+                            if (p1pieces[i].getX()+1 == endPosx && p1pieces[i].getY() +1 == endPosy && p1pieces[i] != piece)
+                                return false;
+                            if (p2pieces[i].getX()+1== endPosx && p2pieces[i].getY()+1 == endPosy)
+                                return false;
+                        }
+                    }
+                }
+                
             }
         }
         
