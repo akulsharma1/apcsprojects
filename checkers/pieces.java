@@ -56,4 +56,7 @@ public class pieces {
     public String getPlayer() {
         return player;
     }
+    public void setPlayer(String s) {
+        player = s;
+    }
 }
