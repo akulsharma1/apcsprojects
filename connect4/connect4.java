@@ -11,9 +11,18 @@ public class connect4 {
             }
         }
     }
+    
     public static void printBoard() {
+        String ANSI_YELLOW = "\u001B[33m";
+        String ANSI_RESET = "\u001B[0m";
+        String ANSI_BLUE = "\u001B[34m";
         for (int x = 0; x < 6; x++) {
             for (int y = 0; y < 7; y++) {
+                if (board[x][y].equals("Y"))
+                System.out.print(ANSI_YELLOW + board[x][y] + ANSI_RESET+"    ");
+                else if (board[x][y].equals("B"))
+                System.out.print(ANSI_BLUE + board[x][y] + ANSI_RESET+"    ");
+                else
                 System.out.print(board[x][y]+"    ");
             }
             System.out.println("\n");
