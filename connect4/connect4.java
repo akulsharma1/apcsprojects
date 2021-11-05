@@ -30,6 +30,7 @@ public class connect4 {
     }
 
     public static void yellowAddPiece(int column) {
+        column--;
         for (int y = 5; y >= 0; y--) {
             if (board[y][column].equals(".")) {
                 board[y][column] = "Y";
@@ -39,6 +40,7 @@ public class connect4 {
     }
 
     public static void blueAddPiece(int column) {
+        column--;
         for (int y = 5; y >= 0; y--) {
             if (board[y][column].equals(".")) {
                 board[y][column] = "B";
@@ -86,7 +88,7 @@ public class connect4 {
 
         int counter = 0;
         while (counter <= 42) {
-            System.out.println("Player yellow, choose column (0 - 6)");
+            System.out.println("Player yellow, choose column (1-7)");
             int yinput = s.nextInt();
             s.nextLine();
             yellowAddPiece(yinput);
@@ -98,7 +100,7 @@ public class connect4 {
             }
             counter++;
 
-            System.out.println("Player blue, choose column (0-6)");
+            System.out.println("Player blue, choose column (1-7)");
             int binput = s.nextInt();
             s.nextLine();
             blueAddPiece(binput);
