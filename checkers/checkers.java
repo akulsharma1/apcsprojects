@@ -72,6 +72,42 @@ public class checkers {
     public static void makeBoardSpotEmpty(pieces piece) {
         board[piece.getX()][piece.getY()] = null;
     }
+    public static boolean checkPlayerCanKill(pieces piece) {
+        if (piece.getPlayer().contains("1")) {
+            if (board[piece.getX()+1][piece.getY()-1] != null && board[piece.getX()+1][piece.getY()-1].getPlayer().contains("2") && board[piece.getX()+2][piece.getY()-2] == null) {
+                return true;
+            }
+            else if (board[piece.getX()-1][piece.getY()-1] != null && board[piece.getX()-1][piece.getY()-1].getPlayer().contains("2") && board[piece.getX()-2][piece.getY()-2] == null) {
+                return true;
+            }
+            if (piece.kingStatus()) {
+                if (board[piece.getX()+1][piece.getY()+1] != null && board[piece.getX()+1][piece.getY()+1].getPlayer().contains("2") && board[piece.getX()+2][piece.getY()+2] == null) {
+                    return true;
+                }
+                else if (board[piece.getX()-1][piece.getY()+1] != null && board[piece.getX()-1][piece.getY()+1].getPlayer().contains("2") && board[piece.getX()-2][piece.getY()+2] == null) {
+                    return true;
+                }
+            }
+            return false;
+        } else if (piece.getPlayer().contains("2")) {
+            if (board[piece.getX()+1][piece.getY()+1] != null && board[piece.getX()+1][piece.getY()+1].getPlayer().contains("1") && board[piece.getX()+2][piece.getY()+2] == null) {
+                return true;
+            }
+            else if (board[piece.getX()-1][piece.getY()+1] != null && board[piece.getX()-1][piece.getY()+1].getPlayer().contains("1") && board[piece.getX()-2][piece.getY()+2] == null) {
+                return true;
+            }
+            if (piece.kingStatus()) {
+                if (board[piece.getX()+1][piece.getY()-1] != null && board[piece.getX()+1][piece.getY()-1].getPlayer().contains("1") && board[piece.getX()+2][piece.getY()-2] == null) {
+                    return true;
+                }
+                else if (board[piece.getX()-1][piece.getY()-1] != null && board[piece.getX()-1][piece.getY()-1].getPlayer().contains("1") && board[piece.getX()-2][piece.getY()-2] == null) {
+                    return true;
+                }
+            }
+            return false;
+        }
+        return false;
+    }
     public static boolean checkLegalMove(pieces piece, int endPosx, int endPosy) {
         if (endPosx > 7 || endPosy > 7 || endPosx < 0 || endPosy < 0) // checks if out of bounds
             return false;
@@ -89,11 +125,11 @@ public class checkers {
                     for (int i = 0; i < p1pieces.length; i++) {
                         
                         // checks if there is a player 1 piece already in that spot
-                        if (p1pieces[i].getX() == endPosx && p1pieces[i].getY() == endPosy && !p1pieces[i].equals(piece))
+                        if (p1pieces[i] != null && p1pieces[i].getX() == endPosx && p1pieces[i].getY() == endPosy && !p1pieces[i].equals(piece))
                             return false;
                         
                         // checks if there is a player 2 piece already in that spot
-                        if (p2pieces[i].getX() == endPosx && p2pieces[i].getY() == endPosy)
+                        if (p2pieces[i] != null && p2pieces[i].getX() == endPosx && p2pieces[i].getY() == endPosy)
                             return false;
                         
                     }
@@ -105,12 +141,12 @@ public class checkers {
                     boolean pieceExistsInSpace = false;
                     for (int i = 0; i < p2pieces.length; i++) {
                         // checks if user is trying to capture their own piece
-                        if (p1pieces[i].getX() == piece.getX()+1 && p1pieces[i].getY() == piece.getY()-1) {
+                        if (p1pieces[i] != null && p1pieces[i].getX() == piece.getX()+1 && p1pieces[i].getY() == piece.getY()-1) {
                             return false;
                         }
                             
                         // if user is capturing an enemy piece, sets enemy captured piece to null
-                        else if (p2pieces[i].getX() == piece.getX()+1 && p2pieces[i].getY() == piece.getY()-1) {
+                        else if (p2pieces[i] != null && p2pieces[i].getX() == piece.getX()+1 && p2pieces[i].getY() == piece.getY()-1) {
                             pieceExistsInSpace = true;
                             makeBoardSpotEmpty(p2pieces[i]);
                             p2pieces[i] = null;
@@ -129,12 +165,12 @@ public class checkers {
                     boolean pieceExistsInSpace = false;
                     for (int i = 0; i < p2pieces.length; i++) {
                         // checks if user is tryng to capture their own piece
-                        if (p1pieces[i].getX() == piece.getX()-1 && p1pieces[i].getY() == piece.getY()-1) {
+                        if (p1pieces[i] != null && p1pieces[i].getX() == piece.getX()-1 && p1pieces[i].getY() == piece.getY()-1) {
                             return false;
                         }
 
                         // if user is capturing an enemy piece, sets enemy captured piece to null
-                        if (p2pieces[i].getX() == piece.getX()-1 && p2pieces[i].getY() == piece.getY()-1) {
+                        if (p2pieces[i] != null && p2pieces[i].getX() == piece.getX()-1 && p2pieces[i].getY() == piece.getY()-1) {
                             makeBoardSpotEmpty(p2pieces[i]);
                             p2pieces[i] = null;
                             pieceExistsInSpace = true;
@@ -161,9 +197,9 @@ public class checkers {
                 else if ((piece.getX()-1 == endPosx && piece.getY() - 1 == endPosy) || (piece.getX()-1 == endPosx && piece.getY() + 1 == endPosy) || (piece.getX()+1 == endPosx && piece.getY() - 1 == endPosy) || (piece.getX()+1 == endPosx && piece.getY() + 1 == endPosy)) {
                     for (int i = 0; i < p2pieces.length; i++) {
                         // checks if a piece (either player 1 or player 2 already exists in given spot)
-                        if (p1pieces[i].getX() == endPosx && p1pieces[i].getY() == endPosy && !p1pieces[i].equals(piece)) 
+                        if (p1pieces[i] != null && p1pieces[i].getX() == endPosx && p1pieces[i].getY() == endPosy && !p1pieces[i].equals(piece)) 
                             return false;
-                        if (p2pieces[i].getX() == endPosx && p1pieces[i].getY() == endPosy)
+                        if (p2pieces[i] != null && p2pieces[i].getX() == endPosx && p1pieces[i].getY() == endPosy)
                             return false;
                     }
                 }
@@ -172,9 +208,9 @@ public class checkers {
                 else if (piece.getX()-2 == endPosx && piece.getY()-2 == endPosy) {
                     boolean pieceExistsInSpace = false;
                     for (int i = 0; i < p2pieces.length; i++) {
-                        if (p1pieces[i].getX() == piece.getX()-1 && p1pieces[i].getY() == piece.getY()-1)
+                        if (p1pieces[i] != null && p1pieces[i].getX() == piece.getX()-1 && p1pieces[i].getY() == piece.getY()-1)
                             return false;
-                        if (p2pieces[i].getX() == piece.getX()-1 && p2pieces[i].getY() == piece.getY()-1) {
+                        if (p2pieces[i] != null && p2pieces[i].getX() == piece.getX()-1 && p2pieces[i].getY() == piece.getY()-1) {
                             makeBoardSpotEmpty(p2pieces[i]);
                             p2pieces[i] = null;
                             pieceExistsInSpace = true;
@@ -191,9 +227,9 @@ public class checkers {
                 else if (piece.getX()-2 == endPosx && piece.getY()+2 == endPosy) {
                     boolean pieceExistsInSpace = false;
                     for (int i = 0; i < p2pieces.length; i++) {
-                        if (p1pieces[i].getX() == piece.getX()-1 && p1pieces[i].getY() == piece.getY()+1)
+                        if (p1pieces[i] != null && p1pieces[i].getX() == piece.getX()-1 && p1pieces[i].getY() == piece.getY()+1)
                             return false;
-                        if (p2pieces[i].getX() == piece.getX()-1 && p2pieces[i].getY() == piece.getY()+1) {
+                        if (p2pieces[i] != null && p2pieces[i].getX() == piece.getX()-1 && p2pieces[i].getY() == piece.getY()+1) {
                             makeBoardSpotEmpty(p2pieces[i]);
                             p2pieces[i] = null;
                             pieceExistsInSpace=true;
@@ -209,9 +245,9 @@ public class checkers {
                 else if (piece.getX()+2 == endPosx && piece.getY()-2 == endPosy) {
                     boolean pieceExistsInSpace = false;
                     for (int i = 0; i < p2pieces.length; i++) {
-                        if (p1pieces[i].getX() == piece.getX()+1 && p1pieces[i].getY() == piece.getY()-1)
+                        if (p1pieces[i] != null && p1pieces[i].getX() == piece.getX()+1 && p1pieces[i].getY() == piece.getY()-1)
                             return false;
-                        if (p2pieces[i].getX() == piece.getX()+1 && p2pieces[i].getY() == piece.getY()-1) {
+                        if (p2pieces[i] != null && p2pieces[i].getX() == piece.getX()+1 && p2pieces[i].getY() == piece.getY()-1) {
                             makeBoardSpotEmpty(p2pieces[i]);
                             p2pieces[i] = null;
                             pieceExistsInSpace=true;
@@ -228,11 +264,11 @@ public class checkers {
                 else if (piece.getX()+2 == endPosx && piece.getY()+2 == endPosy) {
                     boolean pieceExistsInSpace = false;
                     for (int i = 0; i < p2pieces.length; i++) {
-                        if (p1pieces[i].getX() == piece.getX()+1 && p1pieces[i].getY() == piece.getY()+1)
+                        if (p1pieces[i] != null && p1pieces[i].getX() == piece.getX()+1 && p1pieces[i].getY() == piece.getY()+1)
                             return false;
-                        if (p2pieces[i].getX() == piece.getX()+1 && p2pieces[i].getY() == piece.getY()+1) {
-                            p2pieces[i] = null;
+                        if (p2pieces[i] != null && p2pieces[i].getX() == piece.getX()+1 && p2pieces[i].getY() == piece.getY()+1) {
                             makeBoardSpotEmpty(p2pieces[i]);
+                            p2pieces[i] = null;
                             pieceExistsInSpace=true;
                         }
                         
@@ -258,11 +294,11 @@ public class checkers {
                     for (int i = 0; i < p1pieces.length; i++) {
                         
                         // checks if there is a player 1 piece already in that spot
-                        if (p1pieces[i].getX() == endPosx && p1pieces[i].getY() == endPosy && !p1pieces[i].equals(piece))
+                        if (p1pieces[i] != null && p1pieces[i].getX() == endPosx && p1pieces[i].getY() == endPosy && !p1pieces[i].equals(piece))
                             return false;
                         
                         // checks if there is a player 2 piece already in that spot
-                        if (p2pieces[i].getX() == endPosx && p2pieces[i].getY() == endPosy)
+                        if (p2pieces[i] != null && p2pieces[i].getX() == endPosx && p2pieces[i].getY() == endPosy)
                             return false;
                         
                     }
@@ -274,10 +310,10 @@ public class checkers {
                     boolean pieceExistsInSpace = false;
                     for (int i = 0; i < p2pieces.length; i++) {
                         // checks if user is trying to capture their own piece
-                        if (p2pieces[i].getX() == piece.getX()+1 && p2pieces[i].getY() == piece.getY()+1)
+                        if (p2pieces[i] != null && p2pieces[i].getX() == piece.getX()+1 && p2pieces[i].getY() == piece.getY()+1)
                             return false;
                         // if user is capturing an enemy piece, sets enemy captured piece to null
-                        if (p1pieces[i].getX() == piece.getX()+1 && p1pieces[i].getY() == piece.getY()+1) {
+                        if (p1pieces[i] != null && p1pieces[i].getX() == piece.getX()+1 && p1pieces[i].getY() == piece.getY()+1) {
                             pieceExistsInSpace = true;
                             makeBoardSpotEmpty(p1pieces[i]);
                             p1pieces[i] = null;
@@ -295,12 +331,12 @@ public class checkers {
                     boolean pieceExistsInSpace = false;
                     for (int i = 0; i < p2pieces.length; i++) {
                         // checks if user is tryng to capture their own piece
-                        if (p2pieces[i].getX() == piece.getX() - 1 && p2pieces[i].getY() == piece.getY()+1) {
+                        if (p2pieces[i] != null && p2pieces[i].getX() == piece.getX() - 1 && p2pieces[i].getY() == piece.getY()+1) {
                             return false;
                         }
 
                         // if user is capturing an enemy piece, sets enemy captured piece to null
-                        if (p1pieces[i].getX() == piece.getX() - 1 && p1pieces[i].getY() == piece.getY()+1) {
+                        if (p1pieces[i] != null && p1pieces[i].getX() == piece.getX() - 1 && p1pieces[i].getY() == piece.getY()+1) {
                             makeBoardSpotEmpty(p1pieces[i]);
                             p1pieces[i] = null;
                             pieceExistsInSpace=true;
@@ -324,11 +360,11 @@ public class checkers {
                     for (int i = 0; i < p1pieces.length; i++) {
                         
                         // checks if there is a player 1 piece already in that spot
-                        if (p1pieces[i].getX() == endPosx && p1pieces[i].getY() == endPosy && !p1pieces[i].equals(piece))
+                        if (p1pieces[i] != null && p1pieces[i].getX() == endPosx && p1pieces[i].getY() == endPosy && !p1pieces[i].equals(piece))
                             return false;
                         
                         // checks if there is a player 2 piece already in that spot
-                        if (p2pieces[i].getX() == endPosx && p2pieces[i].getY() == endPosy)
+                        if (p2pieces[i] != null && p2pieces[i].getX() == endPosx && p2pieces[i].getY() == endPosy)
                             return false;
                         
                     }
@@ -340,10 +376,10 @@ public class checkers {
                     boolean pieceExistsInSpace = false;
                     for (int i = 0; i < p2pieces.length; i++) {
                         // checks if user is trying to capture their own piece
-                        if (p2pieces[i].getX() == piece.getX()+1 && p2pieces[i].getY() == piece.getY()+1)
+                        if (p2pieces[i] != null && p2pieces[i].getX() == piece.getX()+1 && p2pieces[i].getY() == piece.getY()+1)
                             return false;
                         // if user is capturing an enemy piece, sets enemy captured piece to null
-                        if (p1pieces[i].getX() == piece.getX()+1 && p1pieces[i].getY() == piece.getY()+1) {
+                        if (p1pieces[i] != null && p1pieces[i].getX() == piece.getX()+1 && p1pieces[i].getY() == piece.getY()+1) {
                             pieceExistsInSpace = true;
                             makeBoardSpotEmpty(p1pieces[i]);
                             p1pieces[i] = null;
@@ -361,12 +397,12 @@ public class checkers {
                     boolean pieceExistsInSpace = false;
                     for (int i = 0; i < p2pieces.length; i++) {
                         // checks if user is tryng to capture their own piece
-                        if (p2pieces[i].getX() == piece.getX() - 1 && p2pieces[i].getY() == piece.getY()+1) {
+                        if (p2pieces[i] != null && p2pieces[i].getX() == piece.getX() - 1 && p2pieces[i].getY() == piece.getY()+1) {
                             return false;
                         }
 
                         // if user is capturing an enemy piece, sets enemy captured piece to null
-                        if (p1pieces[i].getX() == piece.getX() - 1 && p1pieces[i].getY() == piece.getY()+1) {
+                        if (p1pieces[i] != null && p1pieces[i].getX() == piece.getX() - 1 && p1pieces[i].getY() == piece.getY()+1) {
                             makeBoardSpotEmpty(p1pieces[i]);
                             p1pieces[i] = null;
                             pieceExistsInSpace=true;
@@ -385,10 +421,10 @@ public class checkers {
                     boolean pieceExistsInSpace = false;
                     for (int i = 0; i < p2pieces.length; i++) {
                         // checks if user is trying to capture their own piece
-                        if (p2pieces[i].getX() == piece.getX() - 1 && p2pieces[i].getY() == piece.getY()-1)
+                        if (p2pieces[i] != null && p2pieces[i].getX() == piece.getX() - 1 && p2pieces[i].getY() == piece.getY()-1)
                             return false;
                         // if user is capturing an enemy piece, sets enemy captured piece to null
-                        if (p1pieces[i].getX() == piece.getX() - 1 && p1pieces[i].getY() == piece.getY()-1) {
+                        if (p1pieces[i] != null && p1pieces[i].getX() == piece.getX() - 1 && p1pieces[i].getY() == piece.getY()-1) {
                             makeBoardSpotEmpty(p1pieces[i]);
                             p1pieces[i] = null;
                             pieceExistsInSpace=true;
@@ -458,19 +494,23 @@ public class checkers {
             s.nextLine();
             
             boolean valid = checkLegalMove(p1pieces[piecenum], xCoor, yCoor);
+            boolean play2 = false;
             if (valid) {
                 move(p1pieces[piecenum], xCoor, yCoor);
                 System.out.println("Moved piece");
                 kingPiece(p1pieces[piecenum], xCoor, yCoor);
                 counter++;
+                play2 = checkPlayerCanKill(p1pieces[piecenum]);
             }
             int winner = checkWinner();
             if (winner != -1) {
                 System.out.println("Player "+winner+" wins!");
                 System.exit(0);
             }
-            if (valid) {
+            if (valid && !play2) {
                 p1validMove = true;
+            } else if (valid && play2) {
+                p1validMove = false;
             }
         }
 
@@ -498,13 +538,14 @@ public class checkers {
             System.out.println("Player 2: Enter the y coordinate which you would like to move to");
             int yCoor = s.nextInt();
             s.nextLine();
-
+            boolean play2 = false;
             boolean legal = checkLegalMove(p2pieces[piecenum], xCoor, yCoor);
             if (legal) {
                 move(p2pieces[piecenum], xCoor, yCoor);
                 System.out.println("Moved piece");
                 kingPiece(p2pieces[piecenum], xCoor, yCoor);
                 counter++;
+                play2 = checkPlayerCanKill(p2pieces[piecenum]);
             } else {
                 System.out.println("Illegal move");
             }
@@ -513,8 +554,10 @@ public class checkers {
                 System.out.println("Player "+winner+" wins!");
                 System.exit(0);
             }
-            if(legal) {
+            if(legal && !play2) {
                 p2validMove = true;
+            } else if (legal && play2) {
+                p2validMove = false;
             }
         }
     }
