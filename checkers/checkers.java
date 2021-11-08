@@ -274,15 +274,18 @@ public class checkers {
                     boolean pieceExistsInSpace = false;
                     for (int i = 0; i < p2pieces.length; i++) {
                         // checks if user is trying to capture their own piece
-                        if (p1pieces[i].getX() == piece.getX()+1 && p1pieces[i].getY() == endPosy+1)
+                        if (p2pieces[i].getX() == piece.getX()+1 && p2pieces[i].getY() == piece.getY()+1)
                             return false;
                         // if user is capturing an enemy piece, sets enemy captured piece to null
-                        if (p2pieces[i].getX() == piece.getX()+1 && p2pieces[i].getY() == endPosy+1) {
+                        if (p1pieces[i].getX() == piece.getX()+1 && p1pieces[i].getY() == piece.getY()+1) {
                             pieceExistsInSpace = true;
-                            p2pieces[i] = null;
+                            makeBoardSpotEmpty(p1pieces[i]);
+                            p1pieces[i] = null;
                         }
-                        if (!pieceExistsInSpace) {
+                        if (!pieceExistsInSpace && p2pieces.length - i == 1 ) {
                             return false;
+                        } else if (pieceExistsInSpace){
+                            return true;
                         }
                     }
                 }
@@ -292,17 +295,109 @@ public class checkers {
                     boolean pieceExistsInSpace = false;
                     for (int i = 0; i < p2pieces.length; i++) {
                         // checks if user is tryng to capture their own piece
-                        if (p1pieces[i].getX() == piece.getX() - 1 && p1pieces[i].getY() == piece.getY()-1) {
+                        if (p2pieces[i].getX() == piece.getX() - 1 && p2pieces[i].getY() == piece.getY()+1) {
                             return false;
                         }
 
                         // if user is capturing an enemy piece, sets enemy captured piece to null
-                        if (p2pieces[i].getX() == piece.getX() - 1 && p2pieces[i].getY() == piece.getY()-1) {
-                            p2pieces[i] = null;
+                        if (p1pieces[i].getX() == piece.getX() - 1 && p1pieces[i].getY() == piece.getY()+1) {
+                            makeBoardSpotEmpty(p1pieces[i]);
+                            p1pieces[i] = null;
                             pieceExistsInSpace=true;
+                            
                         }
-                        if (!pieceExistsInSpace) {
+                        if (!pieceExistsInSpace && p2pieces.length - i == 1 ) {
                             return false;
+                        } else if(pieceExistsInSpace){
+                            return true;
+                        }
+                    }
+                }
+                else return false;
+                return true;
+            } else {
+                if (piece.getX()==endPosx) // checks if user's endposx has not changed (if it hasn't changed = invalid move)
+                    return false;
+                // code for diagonal movements that are not captures
+                // checks if endpos = any possible diagonals
+                else if ((piece.getX()+1 == endPosx && piece.getY()+1 == endPosy) || (piece.getX()-1 == endPosx && piece.getY()+1 == endPosy) || (piece.getX()+1 == endPosx && piece.getY()-1 == endPosy) || (piece.getX()-1 == endPosx && piece.getY()-1 == endPosy)) {
+                    for (int i = 0; i < p1pieces.length; i++) {
+                        
+                        // checks if there is a player 1 piece already in that spot
+                        if (p1pieces[i].getX() == endPosx && p1pieces[i].getY() == endPosy && p1pieces[i] != piece)
+                            return false;
+                        
+                        // checks if there is a player 2 piece already in that spot
+                        if (p2pieces[i].getX() == endPosx && p2pieces[i].getY() == endPosy)
+                            return false;
+                        
+                    }
+                }
+
+                // code for diagonal captures
+                // checks if move is downwards right capture
+                else if (piece.getX()+2 == endPosx && piece.getY()+2 == endPosy) {
+                    boolean pieceExistsInSpace = false;
+                    for (int i = 0; i < p2pieces.length; i++) {
+                        // checks if user is trying to capture their own piece
+                        if (p2pieces[i].getX() == piece.getX()+1 && p2pieces[i].getY() == piece.getY()+1)
+                            return false;
+                        // if user is capturing an enemy piece, sets enemy captured piece to null
+                        if (p1pieces[i].getX() == piece.getX()+1 && p1pieces[i].getY() == piece.getY()+1) {
+                            pieceExistsInSpace = true;
+                            makeBoardSpotEmpty(p1pieces[i]);
+                            p1pieces[i] = null;
+                        }
+                        if (!pieceExistsInSpace && p2pieces.length - i == 1 ) {
+                            return false;
+                        } else if (pieceExistsInSpace){
+                            return true;
+                        }
+                    }
+                }
+
+                // checks if move is downwards left capture
+                else if (piece.getX()-2 == endPosx && piece.getY()+2 == endPosy) {
+                    boolean pieceExistsInSpace = false;
+                    for (int i = 0; i < p2pieces.length; i++) {
+                        // checks if user is tryng to capture their own piece
+                        if (p2pieces[i].getX() == piece.getX() - 1 && p2pieces[i].getY() == piece.getY()+1) {
+                            return false;
+                        }
+
+                        // if user is capturing an enemy piece, sets enemy captured piece to null
+                        if (p1pieces[i].getX() == piece.getX() - 1 && p1pieces[i].getY() == piece.getY()+1) {
+                            makeBoardSpotEmpty(p1pieces[i]);
+                            p1pieces[i] = null;
+                            pieceExistsInSpace=true;
+                            
+                        }
+                        if (!pieceExistsInSpace && p2pieces.length - i == 1 ) {
+                            return false;
+                        } else if(pieceExistsInSpace){
+                            return true;
+                        }
+                    }
+                }
+
+                // checks if move is upwards left capture
+                else if (piece.getX()-2 == endPosx && piece.getY()-2 == endPosy) {
+                    boolean pieceExistsInSpace = false;
+                    for (int i = 0; i < p2pieces.length; i++) {
+                        // checks if user is trying to capture their own piece
+                        if (p2pieces[i].getX() == piece.getX() - 1 && p2pieces[i].getY() == piece.getY()-1)
+                            return false;
+                        // if user is capturing an enemy piece, sets enemy captured piece to null
+                        if (p1pieces[i].getX() == piece.getX() - 1 && p1pieces[i].getY() == piece.getY()-1) {
+                            makeBoardSpotEmpty(p1pieces[i]);
+                            p1pieces[i] = null;
+                            pieceExistsInSpace=true;
+                            
+                        }
+                        if (!pieceExistsInSpace && p2pieces.length - i == 1 ) {
+                            return false;
+                        } else if(pieceExistsInSpace){
+                            return true;
                         }
                     }
                 }
@@ -311,7 +406,6 @@ public class checkers {
             }
         }
         
-        return false;
     }
 
     public static void kingPiece(pieces piece, int endposx, int endposy) {
@@ -346,7 +440,7 @@ public class checkers {
             printBoard();
             System.out.println("---------------------");
             for (int i = 0; i < p1pieces.length; i++) {
-                if (p1pieces[i].getX() >= 0)
+                if (p1pieces[i] != null)
                     System.out.println("Piece "+i+":   x:"+p1pieces[i].getX()+"    y:"+p1pieces[i].getY());
             }
             System.out.println("---------------------");
