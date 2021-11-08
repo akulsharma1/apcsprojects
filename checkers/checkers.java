@@ -89,7 +89,7 @@ public class checkers {
                     for (int i = 0; i < p1pieces.length; i++) {
                         
                         // checks if there is a player 1 piece already in that spot
-                        if (p1pieces[i].getX() == endPosx && p1pieces[i].getY() == endPosy && p1pieces[i] != piece)
+                        if (p1pieces[i].getX() == endPosx && p1pieces[i].getY() == endPosy && !p1pieces[i].equals(piece))
                             return false;
                         
                         // checks if there is a player 2 piece already in that spot
@@ -161,7 +161,7 @@ public class checkers {
                 else if ((piece.getX()-1 == endPosx && piece.getY() - 1 == endPosy) || (piece.getX()-1 == endPosx && piece.getY() + 1 == endPosy) || (piece.getX()+1 == endPosx && piece.getY() - 1 == endPosy) || (piece.getX()+1 == endPosx && piece.getY() + 1 == endPosy)) {
                     for (int i = 0; i < p2pieces.length; i++) {
                         // checks if a piece (either player 1 or player 2 already exists in given spot)
-                        if (p1pieces[i].getX() == endPosx && p1pieces[i].getY() == endPosy && p1pieces[i] != piece) 
+                        if (p1pieces[i].getX() == endPosx && p1pieces[i].getY() == endPosy && !p1pieces[i].equals(piece)) 
                             return false;
                         if (p2pieces[i].getX() == endPosx && p1pieces[i].getY() == endPosy)
                             return false;
@@ -258,7 +258,7 @@ public class checkers {
                     for (int i = 0; i < p1pieces.length; i++) {
                         
                         // checks if there is a player 1 piece already in that spot
-                        if (p1pieces[i].getX() == endPosx && p1pieces[i].getY() == endPosy && p1pieces[i] != piece)
+                        if (p1pieces[i].getX() == endPosx && p1pieces[i].getY() == endPosy && !p1pieces[i].equals(piece))
                             return false;
                         
                         // checks if there is a player 2 piece already in that spot
@@ -324,7 +324,7 @@ public class checkers {
                     for (int i = 0; i < p1pieces.length; i++) {
                         
                         // checks if there is a player 1 piece already in that spot
-                        if (p1pieces[i].getX() == endPosx && p1pieces[i].getY() == endPosy && p1pieces[i] != piece)
+                        if (p1pieces[i].getX() == endPosx && p1pieces[i].getY() == endPosy && !p1pieces[i].equals(piece))
                             return false;
                         
                         // checks if there is a player 2 piece already in that spot
