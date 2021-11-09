@@ -57,7 +57,7 @@ public class roadrace {
     public static void femaleWinners(player[] players) {
         int counter = 0;
         for (int i = 2; i < players.length; i++) {
-            if (counter <= 1 && players[i].getGender().equals("F")) {
+            if (counter < 1 && players[i].getGender().equals("F")) {
                 counter++;
                 System.out.println("Female "+counter+" winner time: "+players[i].getTime());
             }
