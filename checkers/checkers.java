@@ -74,33 +74,33 @@ public class checkers {
     }
     public static boolean checkPlayerCanKill(pieces piece) {
         if (piece.getPlayer().contains("1")) {
-            if (board[piece.getX()+1][piece.getY()-1] != null && board[piece.getX()+1][piece.getY()-1].getPlayer().contains("2") && board[piece.getX()+2][piece.getY()-2] == null) {
+            if (piece.getX()+1 <= 7 && piece.getY()-1 <= 7 && piece.getX()+1 >= 0 && piece.getY()-1 >= 0 && board[piece.getX()+1][piece.getY()-1] != null && board[piece.getX()+1][piece.getY()-1].getPlayer().contains("2") && board[piece.getX()+2][piece.getY()-2] == null) {
                 return true;
             }
-            else if (board[piece.getX()-1][piece.getY()-1] != null && board[piece.getX()-1][piece.getY()-1].getPlayer().contains("2") && board[piece.getX()-2][piece.getY()-2] == null) {
+            else if (piece.getX()-1 <= 7 && piece.getY()-1 <= 7 && piece.getX()-1 >= 0 && piece.getY()-1 >= 0 && board[piece.getX()-1][piece.getY()-1] != null && board[piece.getX()-1][piece.getY()-1].getPlayer().contains("2") && board[piece.getX()-2][piece.getY()-2] == null) {
                 return true;
             }
             if (piece.kingStatus()) {
-                if (board[piece.getX()+1][piece.getY()+1] != null && board[piece.getX()+1][piece.getY()+1].getPlayer().contains("2") && board[piece.getX()+2][piece.getY()+2] == null) {
+                if (piece.getX()+1 <= 7 && piece.getY()+1 <= 7 && piece.getX()+1 >= 0 && piece.getY()+1 >= 0 && board[piece.getX()+1][piece.getY()+1] != null && board[piece.getX()+1][piece.getY()+1].getPlayer().contains("2") && board[piece.getX()+2][piece.getY()+2] == null) {
                     return true;
                 }
-                else if (board[piece.getX()-1][piece.getY()+1] != null && board[piece.getX()-1][piece.getY()+1].getPlayer().contains("2") && board[piece.getX()-2][piece.getY()+2] == null) {
+                else if (piece.getX()+1 <= 7 && piece.getY()-1 <= 7 && piece.getX()+1 >= 0 && piece.getY()-1 >= 0 && board[piece.getX()-1][piece.getY()+1] != null && board[piece.getX()-1][piece.getY()+1].getPlayer().contains("2") && board[piece.getX()-2][piece.getY()+2] == null) {
                     return true;
                 }
             }
             return false;
         } else if (piece.getPlayer().contains("2")) {
-            if (board[piece.getX()+1][piece.getY()+1] != null && board[piece.getX()+1][piece.getY()+1].getPlayer().contains("1") && board[piece.getX()+2][piece.getY()+2] == null) {
+            if (piece.getX()+1 <= 7 && piece.getY()+1 <= 7 && piece.getX()+1 >= 0 && piece.getY()+1 >= 0 && board[piece.getX()+1][piece.getY()+1] != null && board[piece.getX()+1][piece.getY()+1].getPlayer().contains("1") && board[piece.getX()+2][piece.getY()+2] == null) {
                 return true;
             }
-            else if (board[piece.getX()-1][piece.getY()+1] != null && board[piece.getX()-1][piece.getY()+1].getPlayer().contains("1") && board[piece.getX()-2][piece.getY()+2] == null) {
+            else if (piece.getX()-1 <= 7 && piece.getY()+1 <= 7 && piece.getX()-1 >= 0 && piece.getY()+1 >= 0 && board[piece.getX()-1][piece.getY()+1] != null && board[piece.getX()-1][piece.getY()+1].getPlayer().contains("1") && board[piece.getX()-2][piece.getY()+2] == null) {
                 return true;
             }
             if (piece.kingStatus()) {
-                if (board[piece.getX()+1][piece.getY()-1] != null && board[piece.getX()+1][piece.getY()-1].getPlayer().contains("1") && board[piece.getX()+2][piece.getY()-2] == null) {
+                if (piece.getX()+1 <= 7 && piece.getY()-1 <= 7 && piece.getX()+1 >= 0 && piece.getY()-1 >= 0 && board[piece.getX()+1][piece.getY()-1] != null && board[piece.getX()+1][piece.getY()-1].getPlayer().contains("1") && board[piece.getX()+2][piece.getY()-2] == null) {
                     return true;
                 }
-                else if (board[piece.getX()-1][piece.getY()-1] != null && board[piece.getX()-1][piece.getY()-1].getPlayer().contains("1") && board[piece.getX()-2][piece.getY()-2] == null) {
+                else if (piece.getX()-1 <= 7 && piece.getY()-1 <= 7 && piece.getX()-1 >= 0 && piece.getY()-1 >= 0 && board[piece.getX()-1][piece.getY()-1] != null && board[piece.getX()-1][piece.getY()-1].getPlayer().contains("1") && board[piece.getX()-2][piece.getY()-2] == null) {
                     return true;
                 }
             }
