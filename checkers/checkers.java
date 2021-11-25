@@ -7,7 +7,8 @@ public class checkers {
     public static pieces[] p2pieces = new pieces[12];
     public static pieces[][] board = new pieces[8][8];
     public static int counter = 0;
-
+    public static boolean p1prevMoveWasKill = false;
+    public static boolean p2prevMoveWasKill = false;
     public static void printBoard() {
         String ANSI_RED = "\u001B[31m";
         String ANSI_RESET = "\u001B[0m";
@@ -72,41 +73,44 @@ public class checkers {
     public static void makeBoardSpotEmpty(pieces piece) {
         board[piece.getX()][piece.getY()] = null;
     }
-    public static boolean checkPlayerCanKill(pieces piece) {
-        if (piece.getPlayer().contains("1")) {
-            if (piece.getX()+1 <= 7 && piece.getY()-1 <= 7 && piece.getX()+1 >= 0 && piece.getY()-1 >= 0 && board[piece.getX()+1][piece.getY()-1] != null && board[piece.getX()+1][piece.getY()-1].getPlayer().contains("2") && board[piece.getX()+2][piece.getY()-2] == null) {
-                return true;
-            }
-            else if (piece.getX()-1 <= 7 && piece.getY()-1 <= 7 && piece.getX()-1 >= 0 && piece.getY()-1 >= 0 && board[piece.getX()-1][piece.getY()-1] != null && board[piece.getX()-1][piece.getY()-1].getPlayer().contains("2") && board[piece.getX()-2][piece.getY()-2] == null) {
-                return true;
-            }
-            if (piece.kingStatus()) {
-                if (piece.getX()+1 <= 7 && piece.getY()+1 <= 7 && piece.getX()+1 >= 0 && piece.getY()+1 >= 0 && board[piece.getX()+1][piece.getY()+1] != null && board[piece.getX()+1][piece.getY()+1].getPlayer().contains("2") && board[piece.getX()+2][piece.getY()+2] == null) {
+    public static boolean checkPlayerCanKill(pieces piece, boolean previousMoveWasKill) {
+        if (previousMoveWasKill) {
+            if (piece.getPlayer().contains("1")) {
+                if (piece.getX()+1 <= 7 && piece.getY()-1 <= 7 && piece.getX()+1 >= 0 && piece.getY()-1 >= 0 && board[piece.getX()+1][piece.getY()-1] != null && board[piece.getX()+1][piece.getY()-1].getPlayer().contains("2") && board[piece.getX()+2][piece.getY()-2] == null) {
                     return true;
                 }
-                else if (piece.getX()+1 <= 7 && piece.getY()-1 <= 7 && piece.getX()+1 >= 0 && piece.getY()-1 >= 0 && board[piece.getX()-1][piece.getY()+1] != null && board[piece.getX()-1][piece.getY()+1].getPlayer().contains("2") && board[piece.getX()-2][piece.getY()+2] == null) {
+                else if (piece.getX()-1 <= 7 && piece.getY()-1 <= 7 && piece.getX()-1 >= 0 && piece.getY()-1 >= 0 && board[piece.getX()-1][piece.getY()-1] != null && board[piece.getX()-1][piece.getY()-1].getPlayer().contains("2") && board[piece.getX()-2][piece.getY()-2] == null) {
                     return true;
                 }
+                if (piece.kingStatus()) {
+                    if (piece.getX()+1 <= 7 && piece.getY()+1 <= 7 && piece.getX()+1 >= 0 && piece.getY()+1 >= 0 && board[piece.getX()+1][piece.getY()+1] != null && board[piece.getX()+1][piece.getY()+1].getPlayer().contains("2") && board[piece.getX()+2][piece.getY()+2] == null) {
+                        return true;
+                    }
+                    else if (piece.getX()+1 <= 7 && piece.getY()-1 <= 7 && piece.getX()+1 >= 0 && piece.getY()-1 >= 0 && board[piece.getX()-1][piece.getY()+1] != null && board[piece.getX()-1][piece.getY()+1].getPlayer().contains("2") && board[piece.getX()-2][piece.getY()+2] == null) {
+                        return true;
+                    }
+                }
+                return false;
+            } else if (piece.getPlayer().contains("2")) {
+                if (piece.getX()+1 <= 7 && piece.getY()+1 <= 7 && piece.getX()+1 >= 0 && piece.getY()+1 >= 0 && board[piece.getX()+1][piece.getY()+1] != null && board[piece.getX()+1][piece.getY()+1].getPlayer().contains("1") && board[piece.getX()+2][piece.getY()+2] == null) {
+                    return true;
+                }
+                else if (piece.getX()-1 <= 7 && piece.getY()+1 <= 7 && piece.getX()-1 >= 0 && piece.getY()+1 >= 0 && board[piece.getX()-1][piece.getY()+1] != null && board[piece.getX()-1][piece.getY()+1].getPlayer().contains("1") && board[piece.getX()-2][piece.getY()+2] == null) {
+                    return true;
+                }
+                if (piece.kingStatus()) {
+                    if (piece.getX()+1 <= 7 && piece.getY()-1 <= 7 && piece.getX()+1 >= 0 && piece.getY()-1 >= 0 && board[piece.getX()+1][piece.getY()-1] != null && board[piece.getX()+1][piece.getY()-1].getPlayer().contains("1") && board[piece.getX()+2][piece.getY()-2] == null) {
+                        return true;
+                    }
+                    else if (piece.getX()-1 <= 7 && piece.getY()-1 <= 7 && piece.getX()-1 >= 0 && piece.getY()-1 >= 0 && board[piece.getX()-1][piece.getY()-1] != null && board[piece.getX()-1][piece.getY()-1].getPlayer().contains("1") && board[piece.getX()-2][piece.getY()-2] == null) {
+                        return true;
+                    }
+                }
+                return false;
             }
             return false;
-        } else if (piece.getPlayer().contains("2")) {
-            if (piece.getX()+1 <= 7 && piece.getY()+1 <= 7 && piece.getX()+1 >= 0 && piece.getY()+1 >= 0 && board[piece.getX()+1][piece.getY()+1] != null && board[piece.getX()+1][piece.getY()+1].getPlayer().contains("1") && board[piece.getX()+2][piece.getY()+2] == null) {
-                return true;
-            }
-            else if (piece.getX()-1 <= 7 && piece.getY()+1 <= 7 && piece.getX()-1 >= 0 && piece.getY()+1 >= 0 && board[piece.getX()-1][piece.getY()+1] != null && board[piece.getX()-1][piece.getY()+1].getPlayer().contains("1") && board[piece.getX()-2][piece.getY()+2] == null) {
-                return true;
-            }
-            if (piece.kingStatus()) {
-                if (piece.getX()+1 <= 7 && piece.getY()-1 <= 7 && piece.getX()+1 >= 0 && piece.getY()-1 >= 0 && board[piece.getX()+1][piece.getY()-1] != null && board[piece.getX()+1][piece.getY()-1].getPlayer().contains("1") && board[piece.getX()+2][piece.getY()-2] == null) {
-                    return true;
-                }
-                else if (piece.getX()-1 <= 7 && piece.getY()-1 <= 7 && piece.getX()-1 >= 0 && piece.getY()-1 >= 0 && board[piece.getX()-1][piece.getY()-1] != null && board[piece.getX()-1][piece.getY()-1].getPlayer().contains("1") && board[piece.getX()-2][piece.getY()-2] == null) {
-                    return true;
-                }
-            }
-            return false;
-        }
-        return false;
+        } else return false;
+        
     }
     public static boolean checkLegalMove(pieces piece, int endPosx, int endPosy) {
         if (endPosx > 7 || endPosy > 7 || endPosx < 0 || endPosy < 0) // checks if out of bounds
@@ -147,6 +151,7 @@ public class checkers {
                             
                         // if user is capturing an enemy piece, sets enemy captured piece to null
                         else if (p2pieces[i] != null && p2pieces[i].getX() == piece.getX()+1 && p2pieces[i].getY() == piece.getY()-1) {
+                            p2prevMoveWasKill = true;
                             pieceExistsInSpace = true;
                             makeBoardSpotEmpty(p2pieces[i]);
                             p2pieces[i] = null;
@@ -155,6 +160,7 @@ public class checkers {
                         if (!pieceExistsInSpace && p2pieces.length - i == 1) {
                             return false;
                         } else if (pieceExistsInSpace){
+                            p2prevMoveWasKill = true;
                             return true;
                         }
                     }
@@ -172,6 +178,7 @@ public class checkers {
                         // if user is capturing an enemy piece, sets enemy captured piece to null
                         if (p2pieces[i] != null && p2pieces[i].getX() == piece.getX()-1 && p2pieces[i].getY() == piece.getY()-1) {
                             makeBoardSpotEmpty(p2pieces[i]);
+                            p2prevMoveWasKill = true;
                             p2pieces[i] = null;
                             pieceExistsInSpace = true;
                         }
@@ -212,6 +219,7 @@ public class checkers {
                             return false;
                         if (p2pieces[i] != null && p2pieces[i].getX() == piece.getX()-1 && p2pieces[i].getY() == piece.getY()-1) {
                             makeBoardSpotEmpty(p2pieces[i]);
+                            p2prevMoveWasKill = true;
                             p2pieces[i] = null;
                             pieceExistsInSpace = true;
                         }
@@ -500,7 +508,7 @@ public class checkers {
                 System.out.println("Moved piece");
                 kingPiece(p1pieces[piecenum], xCoor, yCoor);
                 counter++;
-                play2 = checkPlayerCanKill(p1pieces[piecenum]);
+                play2 = checkPlayerCanKill(p1pieces[piecenum], true);
             }
             int winner = checkWinner();
             if (winner != -1) {
@@ -545,7 +553,7 @@ public class checkers {
                 System.out.println("Moved piece");
                 kingPiece(p2pieces[piecenum], xCoor, yCoor);
                 counter++;
-                play2 = checkPlayerCanKill(p2pieces[piecenum]);
+                play2 = checkPlayerCanKill(p2pieces[piecenum], true);
             } else {
                 System.out.println("Illegal move");
             }
