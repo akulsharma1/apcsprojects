@@ -71,11 +71,11 @@ public class checkers {
     }
     public static void kill (int xpos, int ypos) {
         for (int i = 0; i < p1pieces.length; i++) {
-            if (p1pieces[i].getX() == xpos && p1pieces[i].getY() == ypos) {
+            if (p1pieces[i] != null && p1pieces[i].getX() == xpos && p1pieces[i].getY() == ypos) {
                 board[p1pieces[i].getX()][p1pieces[i].getY()] = null;
                 p1pieces[i] = null;
             }
-            if (p2pieces[i].getX() == xpos && p2pieces[i].getY() == ypos) {
+            if (p2pieces[i] != null && p2pieces[i].getX() == xpos && p2pieces[i].getY() == ypos) {
                 board[p2pieces[i].getX()][p2pieces[i].getY()] = null;
                 p2pieces[i] = null;
             }
@@ -84,7 +84,7 @@ public class checkers {
     public static boolean checkLegalMovev2(pieces piece, int xpos, int ypos) {
         if (xpos < 0 || xpos > 7 || ypos < 0 || ypos > 7)
             return false;
-        if (piece.getPlayer().contains("1")) {
+        if (piece != null && piece.getPlayer().contains("1")) {
             if (xpos == piece.getX() - 1 && ypos == piece.getY() - 1) {
                 if (board[xpos][ypos] == null) {
                     p1prevMoveWasKill = false;
@@ -140,7 +140,7 @@ public class checkers {
                 }
             }
             return false;
-        } else {
+        } else if (piece != null && piece.getPlayer().contains("2")) {
             if (xpos == piece.getX() - 1 && ypos == piece.getY() + 1) {
                 if (board[xpos][ypos] == null) {
                     p2prevMoveWasKill = false;
@@ -194,7 +194,7 @@ public class checkers {
                 }
             }
             return false;
-        }
+        } else return false;
     }
     public static boolean checkPlayerCanKill(pieces piece, boolean previousMoveWasKill) {
         if (previousMoveWasKill) {
@@ -259,8 +259,10 @@ public class checkers {
             return 2;
         else if (!p2piecesExist)
             return 1;
-        
-        return -1; 
+        else if (p1piecesExist && p2piecesExist)
+            return -1;
+
+        return -1;
     }
     public static void movep1() {
         boolean p1validMove = false;
@@ -298,7 +300,7 @@ public class checkers {
             int winner = checkWinner();
             if (winner != -1) {
                 System.out.println("Player "+winner+" wins!");
-                System.exit(0);
+                System.exit(1);
             }
             if (valid && !play2) {
                 p1validMove = true;
@@ -344,7 +346,7 @@ public class checkers {
             int winner = checkWinner();
             if (winner != -1) {
                 System.out.println("Player "+winner+" wins!");
-                System.exit(0);
+                System.exit(1);
             }
             if(legal && !play2) {
                 p2validMove = true;
