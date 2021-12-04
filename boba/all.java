@@ -3,14 +3,14 @@ package boba;
 public class all {
     public static void main(String[] args) {
         drinks[] drinkList = new drinks[3];
-        boba[] bobaList = new boba[3];
-        bobaList[1] = new boba();
-        bobaList[1].setType("jasmine");
-        bobaList[1].setSweetnessPercentage(30);
-        bobaList[1].setIcePercentage(50);
-        bobaList[1].addTopping("boba");
-        bobaList[1].addTopping("pudding");
+        boba[] marcoBlewAn8_2Lead = new boba[3];
+        marcoBlewAn8_2Lead[1] = new boba();
+        marcoBlewAn8_2Lead[1].setType("jasmine milk tea");
+        marcoBlewAn8_2Lead[1].setSweetnessPercentage(30);
+        marcoBlewAn8_2Lead[1].setIcePercentage(50);
+        marcoBlewAn8_2Lead[1].addTopping("boba");
+        marcoBlewAn8_2Lead[1].addTopping("pudding");
 
-        System.out.println(bobaList[1].toppingList);
+        System.out.println(marcoBlewAn8_2Lead[1].marcosSixPack);
     }
 }
