@@ -33,12 +33,20 @@ public class deck {
         cards.add(new card("Ace", "diamonds", -1));
     }
 
-    public static void shuffle() {
+    public void shuffle() {
         for (int i = 0; i < cards.size(); i++) {
             int j = (int) (Math.random() * cards.size());
             card temp = cards.get(i);
             cards.set(i, cards.get(j));
             cards.set(j, temp);
         }
+    }
+
+    public ArrayList<card> getCards() {
+        return cards;
+    }
+
+    public card getCardFromIndex(int index) {
+        return cards.get(index);
     }
 }
