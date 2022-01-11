@@ -43,11 +43,29 @@ public class blackjack {
                     } else {
                         playerCardCounter += 11;
                     }
+                    
                 } else {
                     playerCardCounter += cardDeck.getCardFromIndex(deckCounter).getValue();
                 }
+                deckCounter++;
+
+                if (playerCardCounter > maxScore) {
+                    System.out.println(name+" Bust!");
+                    break;
+                }
             } else if (option == 2) {
-                // do dealer code here
+                while (true) {
+                    System.out.println("Dealer draws: "+cardDeck.getCardFromIndex(deckCounter).getName()+" of "+cardDeck.getCardFromIndex(deckCounter).getSuit());
+                    
+                    if (dealerCardCounter == 17) {
+
+                    } else if (dealerCardCounter < 17) {
+
+                    } else if (dealerCardCounter > 21){
+                        System.out.println("Dealer bust!");
+                        break;
+                    }
+                }
             }
         }
 
