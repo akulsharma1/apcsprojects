@@ -11,6 +11,6 @@ public class toh {
     }
 
     public static void main(String[] args) {
-        towerofhanoi(30, "A", "C", "B");
+        towerofhanoi(3, "A", "C", "B");
     }
 }
