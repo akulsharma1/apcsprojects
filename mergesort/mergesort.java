@@ -17,34 +17,36 @@ public class mergesort {
             }
         }
 
+        while (y < right) {
+            arr[z] = rightArr[y];
+            z++;
+            y++;
+        }
+        
         while (x < left) {
             arr[z] = leftArr[x];
             z++;
             x++;
         }
 
-        while (y < right) {
-            arr[z] = rightArr[y];
-            z++;
-            y++;
-        }
+        
     }
-    public static void mergeSort(int[] arr, int index) {
-        if (index < 2) return;
-        int middle = index/2;
-        int[] left = new int[middle];
-        int[] right = new int[index - middle];
+    public static void mergeSort(int[] arr, int arrLength) {
+        if (arrLength == 1) return;
+        int middlePos = arrLength/2;
+        int[] left = new int[middlePos];
+        int[] right = new int[arrLength - middlePos];
 
-        for (int i = 0; i < middle; i++) {
+        for (int i = 0; i < middlePos; i++) {
             left[i] = arr[i];
         }
-        for (int i = middle; i < index; i++) {
-            right[i - middle] = arr[i];
+        for (int i = middlePos; i < arrLength; i++) {
+            right[i - middlePos] = arr[i];
         }
 
-        mergeSort(left, middle);
-        mergeSort(right, index - middle);
-        mergeTogether(arr, left, right, index, index-middle);
+        mergeSort(left, middlePos);
+        mergeSort(right, arrLength - middlePos);
+        mergeTogether(arr, left, right, middlePos, arrLength-middlePos);
     }
 
     public static void main(String[] args) {
