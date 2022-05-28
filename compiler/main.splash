@@ -1,0 +1,23 @@
+
+
+int num1 = 69
+
+
+int num2 = 14
+
+
+
+string str = hello
+print str
+
+print 69
+
+
+
+math num1 + num2
+math num1 - num2
+math num1 * num2
+math num1 / num2
+math num1 % num2
+print num1
+print str
