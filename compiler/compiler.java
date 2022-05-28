@@ -12,9 +12,15 @@ public class compiler {
     // splits the given line into an arraylist of all the characters.
     public static ArrayList<String> createLineArr(String s) {
         ArrayList<String> lineArr = new ArrayList<String>();
-        String str[] = s.split(" ");
-        for (int i = 0; i < str.length; i++) {
-            lineArr.add(str[i]);
+        if (s.substring(0, 5).equals("print")) {
+            lineArr.add("print");
+            lineArr.add(s.substring(s.indexOf(" ")+1));
+        }
+        else {
+            String str[] = s.split(" ");
+            for (int i = 0; i < str.length; i++) {
+                lineArr.add(str[i]);
+            }
         }
         return lineArr;
     }
@@ -28,6 +34,7 @@ public class compiler {
         if (list.get(0).equals("int")) return 2;
         if (list.get(0).equals("input")) return 3;
         if (list.get(0).equals("math")) return 4;
+        if (list.get(0).equals("print")) return 5;
         return -1;
     }
 
@@ -56,11 +63,22 @@ public class compiler {
             catch(Exception e){System.out.println("Error: " + e);}
         }
     }
+
+    public static void printHandler(ArrayList<String> list) {
+        if (helpers.stringvars.containsKey(list.get(1))) {
+            System.out.println(helpers.stringvars.get(list.get(1)));
+        } else if (helpers.intvars.containsKey(list.get(1))) {
+            System.out.println(helpers.intvars.get(list.get(1)));
+        } else {
+            System.out.println(list.get(1));
+        }
+    }
     public static void main(String[] args) {
         try {
-            File myObj = new File("compiler/filename.txt");
+            File myObj = new File("compiler/main.splash");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
+                
                 String data = myReader.nextLine();
                 ArrayList<String> list = createLineArr(data);
                 int type = checkLineType(list);
@@ -71,6 +89,8 @@ public class compiler {
                     inputHandler();
                 } else if (type == 4) {
                     mathHandler(list);
+                } else if (type == 5) {
+                    printHandler(list);
                 }
                 
             }
