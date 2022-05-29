@@ -1,0 +1,16 @@
+// documentation: https://akulsharma02.gitbook.io/splash-language-documentation/
+int num1 = 12
+int num2 = 14
+
+// the below will print 26
+math num1 + num2
+
+// the below will print 15
+math num1 + 3
+
+string str1 = testtt
+print str1
+
+print hello // THIS ENTIRE LINE WILL BE IGNORED. IT WILL NOT PRINT HELLO
+
+if num1 == 12 print hello world
