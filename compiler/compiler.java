@@ -8,44 +8,16 @@ import java.io.*;  // Import the File class
 public class compiler {
     
 
-
-    // splits the given line into an arraylist of all the characters.
-    public static ArrayList<String> createLineArr(String s) {
-        ArrayList<String> lineArr = new ArrayList<String>();
-        if (s.substring(0, 5).equals("print")) {
-            lineArr.add("print");
-            lineArr.add(s.substring(s.indexOf(" ")+1));
-        }
-        else {
-            String str[] = s.split(" ");
-            for (int i = 0; i < str.length; i++) {
-                lineArr.add(str[i]);
-            }
-        }
-        return lineArr;
-    }
-
-    
-
-
-    // checks what type of line the given line is.
-    public static int checkLineType(ArrayList<String> list) {
-        if (list.get(0).equals("string")) return 1;
-        if (list.get(0).equals("int")) return 2;
-        if (list.get(0).equals("input")) return 3;
-        if (list.get(0).equals("math")) return 4;
-        if (list.get(0).equals("print")) return 5;
-        return -1;
-    }
-
-    public static void variableHandler(ArrayList<String> list) {
-        if (checkLineType(list) == 1) {
-            helpers.addToStringVars(list.get(1), list.get(3));
-        } else if (checkLineType(list) == 2) {
-            helpers.addToIntVars(list.get(1), Integer.parseInt(list.get(3)));
+    // this adds variables to the hashmap.
+    public static void variableHandler(line line) {
+        if (line.getLineType() == 1) {
+            helpers.addToStringVars(line.getLineArr().get(1), line.getLineArr().get(3));
+        } else if (line.getLineType() == 2) {
+            helpers.addToIntVars(line.getLineArr().get(1), Integer.parseInt(line.getLineArr().get(3)));
         }
     }
 
+    // accepts inputs and prints them
     public static void inputHandler() {
         Scanner s = new Scanner(System.in);
         String l = s.nextLine();
@@ -57,13 +29,25 @@ public class compiler {
         int mathType = math.checkMathFunction(list);
         if (mathType == 1) {
             try{System.out.println(math.add(list));}
-            catch(Exception e){System.out.println("Error: " + e);}
+            catch(Exception e){System.out.println("Error adding");}
         } else if (mathType == 2) {
             try{System.out.println(math.subtract(list));}
-            catch(Exception e){System.out.println("Error: " + e);}
+            catch(Exception e){System.out.println("Error subtracting");}
+        } else if (mathType == 3) {
+            try{System.out.println(math.multiply(list));}
+            catch(Exception e){System.out.println("Error multiplying");}
+        } else if (mathType == 4) {
+            try{System.out.println(math.divide(list));}
+            catch(Exception e){System.out.println("Error dividing");}
+        } else if (mathType == 5) {
+            try{System.out.println(math.mod(list));}
+            catch(Exception e){System.out.println("Error modulus");}
+        } else {
+            System.out.println("Error doing math");
         }
     }
 
+    // handles anything that uses the "print" statement.
     public static void printHandler(ArrayList<String> list) {
         if (helpers.stringvars.containsKey(list.get(1))) {
             System.out.println(helpers.stringvars.get(list.get(1)));
@@ -73,24 +57,37 @@ public class compiler {
             System.out.println(list.get(1));
         }
     }
+
+    // main method.
     public static void main(String[] args) {
         try {
-            File myObj = new File("compiler/main.splash");
+            // opens up main.txt
+            File myObj = new File("compiler/main.txt");
             Scanner myReader = new Scanner(myObj);
             while (myReader.hasNextLine()) {
                 
                 String data = myReader.nextLine();
-                ArrayList<String> list = createLineArr(data);
-                int type = checkLineType(list);
+                // checks if the line is empty.
+                if (data.length() == 0) {
+                    continue;
+                }
+                // checks if it's a comment line
+                if (data.contains("//")) {
+                    continue;
+                }
+                line line = new line(data);
 
-                if (type == 1 || type == 2) {
-                    variableHandler(list);
-                } else if (type == 3) {
+                // handles all types of statements
+                if (line.getLineType() == 1 || line.getLineType() == 2) {
+                    variableHandler(line);
+                } else if (line.getLineType() == 3) {
                     inputHandler();
-                } else if (type == 4) {
-                    mathHandler(list);
-                } else if (type == 5) {
-                    printHandler(list);
+                } else if (line.getLineType() == 4) {
+                    mathHandler(line.getLineArr());
+                } else if (line.getLineType() == 5) {
+                    printHandler(line.getLineArr());
+                } else if (line.getLineType() == 6) {
+                    ifs.runIf(line);
                 }
                 
             }
