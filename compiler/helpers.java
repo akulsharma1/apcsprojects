@@ -4,6 +4,8 @@ import java.util.*;
 
 public class helpers {
 
+    // stores everything to do with variables
+
     public static HashMap<String, Integer> intvars = new HashMap<String, Integer>();
     public static HashMap<String, String> stringvars = new HashMap<String, String>();
 
@@ -13,16 +15,6 @@ public class helpers {
 
     public static void addToStringVars(String key, String value) {
         stringvars.put(key, value);
-    }
-
-    // checks if the given line contains a string. If so, it returns true.
-    public static boolean checkIfListContainsString(ArrayList<String> list, String str) {
-        for (String s : list) {
-            if (s.equals(str)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public static HashMap<String, Integer> checkIfLineHasVariables(ArrayList<String> list) {
